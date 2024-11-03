@@ -2,7 +2,6 @@ import pygame
 
 from constants import * 
 
-BLACK = (0, 0, 0)
 
 def main():
     pygame.init()
@@ -11,7 +10,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        screen.fill(color=BLACK)
+        screen.fill("black")
+        pygame.display.flip()
     
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
