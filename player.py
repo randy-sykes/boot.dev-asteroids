@@ -1,7 +1,7 @@
 import pygame
 
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS
+from constants import * 
 
 
 class Player(CircleShape):
@@ -19,14 +19,24 @@ class Player(CircleShape):
         c = self.position - forward * self.radius + right
         return [a, b, c]
 
-    #To draw the player, override the draw method of CircleShape. It should take the screen object as a parameter, and call pygame.draw.polygon. It takes:
-    #The screen object
-    #A color (use "white")
-    #A list of points (use self.triangle() that we provided for you)
-    #A line width (use 2)
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), width=2)
 
+    def rotate(self, dt):
+        self.rotation += PLAYER_TURN_SPEED * dt
 
+    def update(self, dt):
+        keys = pygame.key.get_pressed()
 
+        if keys[pygame.K_a]:
+            self.rotate(dt * -1)
+        if keys[pygame.K_d]:
+            self.rotate(dt)
+        if keys[pygame.K_s]:
+            self.move(dt * -1)
+        if keys[pygame.K_w]:
+            self.move(dt)
 
+    def move(self, dt):
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.position += forward * PLAYER_SPEED * dt
